@@ -1,0 +1,119 @@
+<mxfile host="app.diagrams.net" modified="2024-03-02T10:00:14.167Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0" etag="HK_HgAGbCofI21V29OEV" version="23.1.6" type="device">
+  <diagram name="Strona-1" id="NmlbgoJUX9Iwb1JyKPN-">
+    <mxGraphModel dx="1562" dy="818" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4kUD1P8MFuOk3b0_Dy2I-1" value="Recepcjonista" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="413.5" y="270" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4kUD1P8MFuOk3b0_Dy2I-2" value="Pacjent" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="100" y="60" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4kUD1P8MFuOk3b0_Dy2I-6" value="Lekarz" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="780" y="220" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-1" value="Zarejestrować się na wizytę u lekarza" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="10" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-2" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="4kUD1P8MFuOk3b0_Dy2I-2" target="bKiomB0-Pbb7UkSi-bBa-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="380" as="sourcePoint" />
+            <mxPoint x="440" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-3" value="Potwierdzić obecność pacjenta przed wizytą" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="591.5" y="220" width="136" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-7" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="4kUD1P8MFuOk3b0_Dy2I-1" target="bKiomB0-Pbb7UkSi-bBa-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="433.5" y="300" as="sourcePoint" />
+            <mxPoint x="583.5" y="-10" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-8" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" target="bKiomB0-Pbb7UkSi-bBa-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="240" as="sourcePoint" />
+            <mxPoint x="340" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-9" value="Wprowadzić swój grafik dostępności" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="650" y="20" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-10" value="Sprawdzić dostępność lekarzy" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="140" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-12" value="&amp;lt;&amp;lt; include &amp;gt;&amp;gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="414" y="100" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="bKiomB0-Pbb7UkSi-bBa-1" target="bKiomB0-Pbb7UkSi-bBa-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="98" as="sourcePoint" />
+            <mxPoint x="350" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-19" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="bKiomB0-Pbb7UkSi-bBa-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="90" as="sourcePoint" />
+            <mxPoint x="364" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-21" value="Odwołać wizytę u lekarza" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="210" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-22" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" target="bKiomB0-Pbb7UkSi-bBa-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="90" as="sourcePoint" />
+            <mxPoint x="364" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-24" value="Sprawdzić swoje wizyty lekarskie" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="210" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-26" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="bKiomB0-Pbb7UkSi-bBa-21" target="bKiomB0-Pbb7UkSi-bBa-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="250" y="310" as="sourcePoint" />
+            <mxPoint x="314" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-27" value="&amp;lt;&amp;lt; include &amp;gt;&amp;gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="180" y="220" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-28" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.442;entryY=-0.012;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="bKiomB0-Pbb7UkSi-bBa-24">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="113" y="150" as="sourcePoint" />
+            <mxPoint x="110" y="190" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-33" value="Sprawdzić kalendarz umówionych wizyt" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="591.5" y="350" width="136" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-34" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="bKiomB0-Pbb7UkSi-bBa-3" target="bKiomB0-Pbb7UkSi-bBa-33">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="458.5" y="335" as="sourcePoint" />
+            <mxPoint x="601.5" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-35" value="&amp;lt;&amp;lt; include &amp;gt;&amp;gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="663.5" y="310" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-36" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="4kUD1P8MFuOk3b0_Dy2I-1" target="bKiomB0-Pbb7UkSi-bBa-33">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="433.5" y="310" as="sourcePoint" />
+            <mxPoint x="601.5" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-39" value="Sprawdzić kalendarz wizyt" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="100" width="136" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bKiomB0-Pbb7UkSi-bBa-40" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="bKiomB0-Pbb7UkSi-bBa-39">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="780" y="240" as="sourcePoint" />
+            <mxPoint x="735" y="109" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
