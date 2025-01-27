@@ -6,113 +6,119 @@
     <changeSet id="001_init" author="kamilceglinski">
 
         <createTable tableName="patient">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="email" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" />
             </column>
             <column name="name" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="surname" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
+            </column>
+            <column name="pesel" type="varchar">
+                <constraints nullable="false" />
             </column>
         </createTable>
 
         <createTable tableName="doctor">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="email" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" />
             </column>
             <column name="name" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="surname" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
-            <column name="gender" type="varchar">
-                <constraints nullable="true" />
+            <column name="pesel" type="varchar">
+                <constraints nullable="false" />
             </column>
         </createTable>
 
         <createTable tableName="availability">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="doctor_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="doctor_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
-            <column name="name" type="varchar">
-                <constraints nullable="true" />
+            <column name="date_time_from" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_time_till" type="timestamp">
+                <constraints nullable="false" />
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="availability" baseColumnNames="doctor_id"
-                                 constraintName="availability_doctor_id_fkc"
-                                 referencedTableName="doctor" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="availability" baseColumnNames="doctor_uuid"
+                                 constraintName="availability_doctor_uuid_fkc"
+                                 referencedTableName="doctor" referencedColumnNames="uuid"/>
 
         <createTable tableName="specialty">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="doctor_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="doctor_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
             <column name="name" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="specialty" baseColumnNames="doctor_id"
-                                 constraintName="specialty_doctor_id_fkc"
-                                 referencedTableName="doctor" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="specialty" baseColumnNames="doctor_uuid"
+                                 constraintName="specialty_doctor_uuid_fkc"
+                                 referencedTableName="doctor" referencedColumnNames="uuid"/>
 
         <createTable tableName="service">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="specialty_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="specialty_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
             <column name="name" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" unique="true" />
             </column>
             <column name="time_in_minutes" type="int"/>
         </createTable>
-        <addForeignKeyConstraint baseTableName="service" baseColumnNames="specialty_id"
-                                 constraintName="service_specialty_id_fkc"
-                                 referencedTableName="specialty" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="service" baseColumnNames="specialty_uuid"
+                                 constraintName="service_specialty_uuid_fkc"
+                                 referencedTableName="specialty" referencedColumnNames="uuid"/>
 
         <createTable tableName="appointment">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="patient_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="patient_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
-            <column name="doctor_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="doctor_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
-            <column name="service_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="service_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
-            <column name="start_date" type="timestamp">
-                <constraints nullable="true" />
+            <column name="start_date_time" type="timestamp">
+                <constraints nullable="false" />
             </column>
             <column name="status" type="varchar">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="appointment" baseColumnNames="patient_id"
-                                 constraintName="appointment_patient_id_fkc"
-                                 referencedTableName="patient" referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="appointment" baseColumnNames="doctor_id"
-                                 constraintName="appointment_doctor_id_fkc"
-                                 referencedTableName="doctor" referencedColumnNames="id"/>
-        <addForeignKeyConstraint baseTableName="appointment" baseColumnNames="service_id"
-                                 constraintName="appointment_service_id_fkc"
-                                 referencedTableName="service" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="appointment" baseColumnNames="patient_uuid"
+                                 constraintName="appointment_patient_uuid_fkc"
+                                 referencedTableName="patient" referencedColumnNames="uuid"/>
+        <addForeignKeyConstraint baseTableName="appointment" baseColumnNames="doctor_uuid"
+                                 constraintName="appointment_doctor_uuid_fkc"
+                                 referencedTableName="doctor" referencedColumnNames="uuid"/>
+        <addForeignKeyConstraint baseTableName="appointment" baseColumnNames="service_uuid"
+                                 constraintName="appointment_service_uuid_fkc"
+                                 referencedTableName="service" referencedColumnNames="uuid"/>
 
     </changeSet>
 </databaseChangeLog>

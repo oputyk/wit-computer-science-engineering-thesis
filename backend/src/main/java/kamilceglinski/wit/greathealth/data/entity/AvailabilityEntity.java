@@ -5,7 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +17,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "patient")
-public class PatientEntity {
+@Table(name = "availability")
+public class AvailabilityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-    @Column(name = "name", nullable = false)
-    private String name;
-    @Column(name = "surname", nullable = false)
-    private String surname;
-    @Column(name = "pesel", nullable = false)
-    private String pesel;
+    @ManyToOne
+    @JoinColumn(name = "doctor_uuid", nullable = false)
+    private DoctorEntity doctor;
+    @Column(name = "date_time_from", nullable = false)
+    private LocalDateTime dateTimeFrom;
+    @Column(name = "date_time_till", nullable = false)
+    private LocalDateTime dateTimeTill;
 }
