@@ -4,10 +4,17 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
+import kamilceglinski.wit.greathealth.data.entity.DoctorSpecialtyEntity;
+import kamilceglinski.wit.greathealth.data.entity.SpecialtyEntity;
 import kamilceglinski.wit.greathealth.data.repository.DoctorRepository;
+import kamilceglinski.wit.greathealth.data.repository.DoctorSpecialtyRepository;
+import kamilceglinski.wit.greathealth.data.repository.SpecialtyRepository;
 import kamilceglinski.wit.greathealth.dto.DoctorRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorResponseDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyRequestDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyResponseDTO;
 import kamilceglinski.wit.greathealth.mapper.DoctorMapper;
+import kamilceglinski.wit.greathealth.mapper.DoctorSpecialtyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +26,9 @@ public class DoctorService {
 
     private final DoctorMapper doctorMapper;
     private final DoctorRepository doctorRepository;
+    private final SpecialtyRepository specialtyRepository;
+    private final DoctorSpecialtyRepository doctorSpecialtyRepository;
+    private final DoctorSpecialtyMapper doctorSpecialtyMapper;
 
     public DoctorResponseDTO createDoctor(DoctorRequestDTO requestDTO) {
         DoctorEntity doctorEntity = doctorMapper.toDoctorEntity(requestDTO);
@@ -44,5 +54,15 @@ public class DoctorService {
             .map(doctorRepository::save)
             .map(doctorMapper::toDoctorResponseDTO)
             .orElseThrow();
+    }
+
+    public DoctorSpecialtyResponseDTO createDoctorSpecialty(DoctorSpecialtyRequestDTO requestDTO, String uuid) {
+        DoctorEntity doctorEntity = doctorRepository.findById(uuid).orElseThrow();
+        SpecialtyEntity specialtyEntity = specialtyRepository.findById(requestDTO.getSpecialtyUuid()).orElseThrow();
+        DoctorSpecialtyEntity doctorSpecialtyEntity = new DoctorSpecialtyEntity();
+        doctorSpecialtyEntity.setDoctor(doctorEntity);
+        doctorSpecialtyEntity.setSpecialty(specialtyEntity);
+        DoctorSpecialtyEntity savedDoctorSpecialtyEntity = doctorSpecialtyRepository.save(doctorSpecialtyEntity);
+        return doctorSpecialtyMapper.toDoctorResponseDTO(savedDoctorSpecialtyEntity);
     }
 }

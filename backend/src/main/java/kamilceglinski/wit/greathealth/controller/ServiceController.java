@@ -35,7 +35,7 @@ public class ServiceController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ServiceResponseDTO> getAllSpecialties() {
-        return serviceService.getAllSpecialties();
+    public List<ServiceResponseDTO> getAllServices() {
+        return serviceService.getAllServices();
     }
 }

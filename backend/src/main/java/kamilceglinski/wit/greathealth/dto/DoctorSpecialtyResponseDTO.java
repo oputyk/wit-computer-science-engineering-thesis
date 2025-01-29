@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpecialtyRequestDTO {
+public class DoctorSpecialtyResponseDTO {
+    private String uuid;
     private String name;
 }

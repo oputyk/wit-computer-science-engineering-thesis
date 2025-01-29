@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
+import kamilceglinski.wit.greathealth.data.entity.DoctorSpecialtyEntity;
 import kamilceglinski.wit.greathealth.data.entity.SpecialtyEntity;
 import kamilceglinski.wit.greathealth.dto.DoctorRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorResponseDTO;
@@ -36,6 +37,7 @@ public class DoctorMapper {
         dto.setSurname(savedDoctorEntity.getSurname());
         dto.setPesel(savedDoctorEntity.getPesel());
         List<String> specialties = savedDoctorEntity.getSpecialties().stream()
+            .map(DoctorSpecialtyEntity::getSpecialty)
             .map(SpecialtyEntity::getName)
             .collect(Collectors.toList());
         dto.setSpecialties(specialties);

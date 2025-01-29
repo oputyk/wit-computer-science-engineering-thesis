@@ -3,11 +3,9 @@ package kamilceglinski.wit.greathealth.service;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
 import kamilceglinski.wit.greathealth.data.entity.SpecialtyEntity;
 import kamilceglinski.wit.greathealth.data.repository.DoctorRepository;
 import kamilceglinski.wit.greathealth.data.repository.SpecialtyRepository;
-import kamilceglinski.wit.greathealth.dto.SpecialtyNameResponseDTO;
 import kamilceglinski.wit.greathealth.dto.SpecialtyRequestDTO;
 import kamilceglinski.wit.greathealth.dto.SpecialtyResponseDTO;
 import kamilceglinski.wit.greathealth.mapper.SpecialtyMapper;
@@ -22,12 +20,9 @@ public class SpecialtyService {
 
     private final SpecialtyMapper specialtyMapper;
     private final SpecialtyRepository specialtyRepository;
-    private final DoctorRepository doctorRepository;
 
     public SpecialtyResponseDTO createSpecialty(SpecialtyRequestDTO requestDTO) {
-        DoctorEntity doctorEntity = doctorRepository.findById(requestDTO.getDoctorUuid())
-            .orElseThrow();
-        SpecialtyEntity specialtyEntity = specialtyMapper.toSpecialtyEntity(requestDTO, doctorEntity);
+        SpecialtyEntity specialtyEntity = specialtyMapper.toSpecialtyEntity(requestDTO);
         SpecialtyEntity savedSpecialtyEntity = specialtyRepository.save(specialtyEntity);
         return specialtyMapper.toSpecialtyResponseDTO(savedSpecialtyEntity);
     }
@@ -38,9 +33,9 @@ public class SpecialtyService {
             .orElseThrow();
     }
 
-    public List<SpecialtyNameResponseDTO> getAllSpecialties() {
-        return specialtyRepository.getDistinctSpecialties().stream()
-            .map(specialtyMapper::toSpecialtyNameResponseDTO)
+    public List<SpecialtyResponseDTO> getAllSpecialties() {
+        return specialtyRepository.findAll().stream()
+            .map(specialtyMapper::toSpecialtyResponseDTO)
             .collect(Collectors.toList());
     }
 }

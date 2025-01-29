@@ -29,6 +29,6 @@ public class DoctorEntity {
     private String surname;
     @Column(name = "pesel", nullable = false)
     private String pesel;
-    @OneToMany(targetEntity = SpecialtyEntity.class, mappedBy = "doctor")
-    private List<SpecialtyEntity> specialties;
+    @OneToMany(targetEntity = DoctorSpecialtyEntity.class, mappedBy = "doctor")
+    private List<DoctorSpecialtyEntity> specialties;
 }

@@ -13,4 +13,5 @@ public class ServiceResponseDTO {
     private String uuid;
     private String name;
     private Integer timeInMinutes;
+    private SpecialtyResponseDTO specialty;
 }

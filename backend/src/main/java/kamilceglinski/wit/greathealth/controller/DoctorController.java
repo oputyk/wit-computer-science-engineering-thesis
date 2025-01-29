@@ -3,6 +3,8 @@ package kamilceglinski.wit.greathealth.controller;
 import java.util.List;
 import kamilceglinski.wit.greathealth.dto.DoctorRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorResponseDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyRequestDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyResponseDTO;
 import kamilceglinski.wit.greathealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,13 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.CREATED)
     public DoctorResponseDTO createDoctor(@RequestBody DoctorRequestDTO requestDTO) {
         return doctorService.createDoctor(requestDTO);
+    }
+
+    @PostMapping("/{uuid}/specialties")
+    @ResponseStatus(HttpStatus.CREATED)
+    public DoctorSpecialtyResponseDTO createDoctorSpecialty(@RequestBody DoctorSpecialtyRequestDTO requestDTO,
+                                                            @PathVariable String uuid) {
+        return doctorService.createDoctorSpecialty(requestDTO, uuid);
     }
 
     @PutMapping("/{uuid}")

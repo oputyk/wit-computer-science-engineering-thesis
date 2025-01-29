@@ -1,7 +1,6 @@
 package kamilceglinski.wit.greathealth.controller;
 
 import java.util.List;
-import kamilceglinski.wit.greathealth.dto.SpecialtyNameResponseDTO;
 import kamilceglinski.wit.greathealth.dto.SpecialtyRequestDTO;
 import kamilceglinski.wit.greathealth.dto.SpecialtyResponseDTO;
 import kamilceglinski.wit.greathealth.service.SpecialtyService;
@@ -36,7 +35,7 @@ public class SpecialtyController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<SpecialtyNameResponseDTO> getAllSpecialties() {
+    public List<SpecialtyResponseDTO> getAllSpecialties() {
         return specialtyService.getAllSpecialties();
     }
 }

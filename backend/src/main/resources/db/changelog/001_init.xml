@@ -63,16 +63,25 @@
             <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
             </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false" unique="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="doctor_specialty">
+            <column name="specialty_uuid" type="varchar">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
             <column name="doctor_uuid" type="varchar">
                 <constraints nullable="false" />
             </column>
-            <column name="name" type="varchar">
-                <constraints nullable="false" />
-            </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="specialty" baseColumnNames="doctor_uuid"
-                                 constraintName="specialty_doctor_uuid_fkc"
+        <addForeignKeyConstraint baseTableName="doctor_specialty" baseColumnNames="doctor_uuid"
+                                 constraintName="doctor_specialty_doctor_uuid_fkc"
                                  referencedTableName="doctor" referencedColumnNames="uuid"/>
+        <addForeignKeyConstraint baseTableName="doctor_specialty" baseColumnNames="specialty_uuid"
+                                 constraintName="doctor_specialty_specialty_uuid_fkc"
+                                 referencedTableName="specialty" referencedColumnNames="uuid"/>
 
         <createTable tableName="service">
             <column name="uuid" type="varchar">

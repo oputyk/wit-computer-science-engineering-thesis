@@ -12,4 +12,5 @@ import lombok.Setter;
 public class ServiceRequestDTO {
     private String name;
     private Integer timeInMinutes;
+    private String specialtyUuid;
 }

@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SpecialtyRequestDTO {
-    private String name;
+public class DoctorSpecialtyRequestDTO {
+    private String specialtyUuid;
 }
