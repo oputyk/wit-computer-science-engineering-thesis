@@ -23,6 +23,6 @@ public class SpecialtyEntity {
     private String uuid;
     @Column(name = "name", nullable = false)
     private String name;
-    @OneToMany(targetEntity = DoctorSpecialtyEntity.class, mappedBy = "doctor")
+    @OneToMany(targetEntity = DoctorSpecialtyEntity.class, mappedBy = "specialty")
     private List<DoctorSpecialtyEntity> doctors;
 }

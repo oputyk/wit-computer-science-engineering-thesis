@@ -69,8 +69,11 @@
         </createTable>
 
         <createTable tableName="doctor_specialty">
-            <column name="specialty_uuid" type="varchar">
+            <column name="uuid" type="varchar">
                 <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="specialty_uuid" type="varchar">
+                <constraints nullable="false" />
             </column>
             <column name="doctor_uuid" type="varchar">
                 <constraints nullable="false" />
