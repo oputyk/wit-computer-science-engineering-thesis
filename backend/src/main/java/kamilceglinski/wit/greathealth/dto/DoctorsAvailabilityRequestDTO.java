@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AvailabilityRequestDTO {
+public class DoctorsAvailabilityRequestDTO {
     private LocalDateTime dateTimeFrom;
     private LocalDateTime dateTimeTill;
 }

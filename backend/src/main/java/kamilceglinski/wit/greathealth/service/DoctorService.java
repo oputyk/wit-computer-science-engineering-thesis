@@ -42,8 +42,14 @@ public class DoctorService {
             .orElseThrow();
     }
 
-    public List<DoctorResponseDTO> getAllDoctors() {
-        return doctorRepository.findAll().stream()
+    public List<DoctorResponseDTO> getAllDoctors(String specialtyUuid) {
+        List<DoctorEntity> doctors;
+        if (specialtyUuid != null) {
+            doctors = doctorRepository.findBySpecialty(specialtyUuid);
+        } else {
+            doctors = doctorRepository.findAll();
+        }
+        return doctors.stream()
             .map(doctorMapper::toDoctorResponseDTO)
             .collect(Collectors.toList());
     }

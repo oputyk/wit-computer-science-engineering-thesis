@@ -1,9 +1,9 @@
 package kamilceglinski.wit.greathealth.controller;
 
 import java.util.List;
-import kamilceglinski.wit.greathealth.dto.AvailabilityRequestDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorsAvailabilityRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AvailabilityResponseDTO;
-import kamilceglinski.wit.greathealth.service.AvailabilityService;
+import kamilceglinski.wit.greathealth.service.DoctorsAvailabilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,27 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("{doctorUuid}/availabilities")
-public class AvailabilityController {
+@RequestMapping("doctors/{doctorUuid}/availabilities")
+public class DoctorsAvailabilityController {
 
-    private final AvailabilityService availabilityService;
+    private final DoctorsAvailabilityService doctorsAvailabilityService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AvailabilityResponseDTO createAvailability(@PathVariable String doctorUuid,
-                                                      @RequestBody AvailabilityRequestDTO requestDTO) {
-        return availabilityService.createAvailability(doctorUuid, requestDTO);
+                                                      @RequestBody DoctorsAvailabilityRequestDTO requestDTO) {
+        return doctorsAvailabilityService.createAvailability(doctorUuid, requestDTO);
     }
 
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public AvailabilityResponseDTO getAvailabilityById(@PathVariable String doctorUuid, @PathVariable String uuid) {
-        return availabilityService.getAvailabilityByUuId(doctorUuid, uuid);
+        return doctorsAvailabilityService.getAvailabilityByUuId(doctorUuid, uuid);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AvailabilityResponseDTO> getAllAvailabilities(@PathVariable String doctorUuid) {
-        return availabilityService.getAllAvailabilities(doctorUuid);
+        return doctorsAvailabilityService.getAllAvailabilities(doctorUuid);
     }
 }

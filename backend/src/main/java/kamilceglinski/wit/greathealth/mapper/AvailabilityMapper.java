@@ -3,7 +3,7 @@ package kamilceglinski.wit.greathealth.mapper;
 import jakarta.transaction.Transactional;
 import kamilceglinski.wit.greathealth.data.entity.AvailabilityEntity;
 import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
-import kamilceglinski.wit.greathealth.dto.AvailabilityRequestDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorsAvailabilityRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AvailabilityResponseDTO;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AvailabilityMapper {
 
-    public AvailabilityEntity toAvailabilityEntity(DoctorEntity doctor, AvailabilityRequestDTO requestDTO) {
+    public AvailabilityEntity toAvailabilityEntity(DoctorEntity doctor, DoctorsAvailabilityRequestDTO requestDTO) {
         AvailabilityEntity availabilityEntity = new AvailabilityEntity();
         return updateAvailabilityEntity(doctor, requestDTO, availabilityEntity);
     }
 
-    public AvailabilityEntity updateAvailabilityEntity(DoctorEntity doctor, AvailabilityRequestDTO requestDTO,
+    public AvailabilityEntity updateAvailabilityEntity(DoctorEntity doctor, DoctorsAvailabilityRequestDTO requestDTO,
                                                        AvailabilityEntity availabilityEntity) {
         availabilityEntity.setDoctor(doctor);
         availabilityEntity.setDateTimeFrom(requestDTO.getDateTimeFrom());

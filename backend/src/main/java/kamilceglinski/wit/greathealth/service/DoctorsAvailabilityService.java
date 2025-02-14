@@ -7,7 +7,7 @@ import kamilceglinski.wit.greathealth.data.entity.AvailabilityEntity;
 import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
 import kamilceglinski.wit.greathealth.data.repository.AvailabilityRepository;
 import kamilceglinski.wit.greathealth.data.repository.DoctorRepository;
-import kamilceglinski.wit.greathealth.dto.AvailabilityRequestDTO;
+import kamilceglinski.wit.greathealth.dto.DoctorsAvailabilityRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AvailabilityResponseDTO;
 import kamilceglinski.wit.greathealth.mapper.AvailabilityMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class AvailabilityService {
+public class DoctorsAvailabilityService {
 
     private final AvailabilityMapper availabilityMapper;
     private final AvailabilityRepository availabilityRepository;
     private final DoctorRepository doctorRepository;
 
-    public AvailabilityResponseDTO createAvailability(String doctorUuid, AvailabilityRequestDTO requestDTO) {
+    public AvailabilityResponseDTO createAvailability(String doctorUuid, DoctorsAvailabilityRequestDTO requestDTO) {
         DoctorEntity doctor = doctorRepository.findById(doctorUuid).orElseThrow();
         AvailabilityEntity availabilityEntity = availabilityMapper.toAvailabilityEntity(doctor, requestDTO);
         AvailabilityEntity savedAvailabilityEntity = availabilityRepository.save(availabilityEntity);
