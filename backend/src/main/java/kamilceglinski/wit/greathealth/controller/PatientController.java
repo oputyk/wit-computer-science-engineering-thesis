@@ -1,11 +1,14 @@
 package kamilceglinski.wit.greathealth.controller;
 
 import java.util.List;
+import kamilceglinski.wit.greathealth.dto.AppointmentRequestDTO;
+import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
 import kamilceglinski.wit.greathealth.dto.PatientRequestDTO;
 import kamilceglinski.wit.greathealth.dto.PatientResponseDTO;
 import kamilceglinski.wit.greathealth.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,5 +47,23 @@ public class PatientController {
     @ResponseStatus(HttpStatus.OK)
     public List<PatientResponseDTO> getAllPatients() {
         return patientService.getAllPatients();
+    }
+
+    @PostMapping("/{uuid}/appointments")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AppointmentResponseDTO createAppointment(@PathVariable String uuid, @RequestBody AppointmentRequestDTO requestDTO) {
+        return patientService.createAppointment(uuid, requestDTO);
+    }
+
+    @GetMapping("/{uuid}/appointments")
+    @ResponseStatus(HttpStatus.OK)
+    public AppointmentResponseDTO createAppointment(@PathVariable String uuid) {
+        return patientService.getAppointments(uuid);
+    }
+
+    @DeleteMapping("/{uuid}/appointments/{appointmentUuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public AppointmentResponseDTO cancelAppointment(@PathVariable String uuid, @PathVariable String appointmentUuid) {
+        return patientService.cancelAppointment(uuid, appointmentUuid);
     }
 }
