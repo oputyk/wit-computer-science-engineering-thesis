@@ -3,7 +3,6 @@ package kamilceglinski.wit.greathealth.service;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import kamilceglinski.wit.greathealth.data.entity.AppointmentEntity;
 import kamilceglinski.wit.greathealth.data.entity.AvailabilityEntity;
@@ -77,18 +76,25 @@ public class PatientService {
             .toList();
         ServiceEntity serviceEntity = serviceRepository.findBySpecialtyInAndUuid(specialties, requestDTO.getServiceUuid())
             .orElseThrow();
-        LocalDateTime tillDateTime = requestDTO.getDateTimeFrom().plusMinutes(serviceEntity.getTimeInMinutes());
+        LocalDateTime newAppointmentDateTimeFrom = requestDTO.getDateTimeFrom();
+        LocalDateTime newAppointmentDateTimeTill = newAppointmentDateTimeFrom.plusMinutes(serviceEntity.getTimeInMinutes());
         AvailabilityEntity availabilityEntity = availabilityRepository.findByDoctorUuidAndDateTime(
-                requestDTO.getDoctorUuid(), requestDTO.getDateTimeFrom(), tillDateTime)
+                requestDTO.getDoctorUuid(), newAppointmentDateTimeFrom, newAppointmentDateTimeTill)
             .orElseThrow();
 
         LocalDateTime availabilityDateTimeFrom = availabilityEntity.getDateTimeFrom();
         LocalDateTime availabilityDateTimeTill = availabilityEntity.getDateTimeTill();
 
-        List<AppointmentEntity> existingAppointments = appointmentRepository.findByDateTimeFromGreaterThanOrEqualAndDateTimeFromLessThanOrEqualThan(
+        List<AppointmentEntity> existingAppointments = appointmentRepository.findByAvailabilityTime(
             availabilityDateTimeFrom, availabilityDateTimeTill);
         for (AppointmentEntity existingAppointment : existingAppointments) {
-            // TODO: check if existing appointments do not collide with the newly created one
+            LocalDateTime existingAppointmentDateTimeFrom = existingAppointment.getDateTimeFrom();
+            Integer existingAppointmentTimeInMinutes = existingAppointment.getService().getTimeInMinutes();
+            LocalDateTime existingAppointmentDateTimeTill = existingAppointmentDateTimeFrom.plusMinutes(existingAppointmentTimeInMinutes);
+            if (isInCollision(newAppointmentDateTimeFrom, newAppointmentDateTimeTill,
+                existingAppointmentDateTimeFrom, existingAppointmentDateTimeTill)) {
+                throw new RuntimeException("New appointment collides with an existing one");
+            }
         }
 
         AppointmentEntity appointmentEntity = appointmentMapper.toAppointmentEntity(requestDTO, patientEntity, doctorEntity, serviceEntity);
@@ -112,5 +118,17 @@ public class PatientService {
         appointmentEntity.setStatus(StatusEnum.CANCELED);
         AppointmentEntity savedAppointmentEntity = appointmentRepository.save(appointmentEntity);
         return appointmentMapper.toAppointmentResponseDTO(savedAppointmentEntity);
+    }
+
+    static boolean isInCollision(LocalDateTime newAppointmentDateTimeFrom, LocalDateTime newAppointmentDateTimeTill,
+                                 LocalDateTime existingAppointmentDateTimeFrom, LocalDateTime existingAppointmentDateTimeTill) {
+        return isDatePointInDateRange(newAppointmentDateTimeFrom, existingAppointmentDateTimeFrom, existingAppointmentDateTimeTill)
+            || (!newAppointmentDateTimeTill.isEqual(existingAppointmentDateTimeFrom) && isDatePointInDateRange(newAppointmentDateTimeTill, existingAppointmentDateTimeFrom, existingAppointmentDateTimeTill))
+            || isDatePointInDateRange(existingAppointmentDateTimeFrom, newAppointmentDateTimeFrom, newAppointmentDateTimeTill)
+            || (!existingAppointmentDateTimeTill.isEqual(newAppointmentDateTimeFrom) && isDatePointInDateRange(existingAppointmentDateTimeTill, newAppointmentDateTimeFrom, newAppointmentDateTimeTill));
+    }
+
+    private static boolean isDatePointInDateRange(LocalDateTime point, LocalDateTime x1Inclusive, LocalDateTime x2Exclusive) {
+        return !x1Inclusive.isAfter(point) && point.isBefore(x2Exclusive);
     }
 }

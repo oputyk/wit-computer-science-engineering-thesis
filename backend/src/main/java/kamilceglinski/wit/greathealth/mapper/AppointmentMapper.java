@@ -4,6 +4,7 @@ import kamilceglinski.wit.greathealth.data.entity.AppointmentEntity;
 import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
 import kamilceglinski.wit.greathealth.data.entity.PatientEntity;
 import kamilceglinski.wit.greathealth.data.entity.ServiceEntity;
+import kamilceglinski.wit.greathealth.data.entity.StatusEnum;
 import kamilceglinski.wit.greathealth.dto.AppointmentRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class AppointmentMapper {
         appointmentEntity.setDoctor(doctorEntity);
         appointmentEntity.setService(serviceEntity);
         appointmentEntity.setDateTimeFrom(requestDTO.getDateTimeFrom());
-        appointmentEntity.setStatus(requestDTO.getStatus());
+        appointmentEntity.setStatus(StatusEnum.CREATED);
         return appointmentEntity;
     }
 

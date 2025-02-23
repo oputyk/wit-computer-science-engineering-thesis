@@ -57,7 +57,7 @@ public class PatientController {
 
     @GetMapping("/{uuid}/appointments")
     @ResponseStatus(HttpStatus.OK)
-    public List<AppointmentResponseDTO> createAppointment(@PathVariable String uuid) {
+    public List<AppointmentResponseDTO> getAppointments(@PathVariable String uuid) {
         return patientService.getAppointments(uuid);
     }
 

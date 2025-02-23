@@ -14,7 +14,7 @@ public interface AvailabilityRepository extends JpaRepository<AvailabilityEntity
 
     Optional<AvailabilityEntity> findByDoctor_uuidAndUuid(String doctorUuid, String uuid);
 
-    @Query(value = "select a from AvailabilityEntity a where a.doctor.uuid = :doctorUuid and a.dateTimeFrom <= :dateTime and a.dateTimeTill >= :tillDateTime")
+    @Query(value = "select a from AvailabilityEntity a where a.doctor.uuid = :doctorUuid and a.dateTimeFrom <= :fromDateTime and a.dateTimeTill >= :tillDateTime")
     Optional<AvailabilityEntity> findByDoctorUuidAndDateTime(String doctorUuid, LocalDateTime fromDateTime, LocalDateTime tillDateTime);
 
 }

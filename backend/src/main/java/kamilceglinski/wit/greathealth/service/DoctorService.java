@@ -3,16 +3,21 @@ package kamilceglinski.wit.greathealth.service;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
+import kamilceglinski.wit.greathealth.data.entity.AppointmentEntity;
 import kamilceglinski.wit.greathealth.data.entity.DoctorEntity;
 import kamilceglinski.wit.greathealth.data.entity.DoctorSpecialtyEntity;
 import kamilceglinski.wit.greathealth.data.entity.SpecialtyEntity;
+import kamilceglinski.wit.greathealth.data.entity.StatusEnum;
+import kamilceglinski.wit.greathealth.data.repository.AppointmentRepository;
 import kamilceglinski.wit.greathealth.data.repository.DoctorRepository;
 import kamilceglinski.wit.greathealth.data.repository.DoctorSpecialtyRepository;
 import kamilceglinski.wit.greathealth.data.repository.SpecialtyRepository;
+import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorResponseDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyResponseDTO;
+import kamilceglinski.wit.greathealth.mapper.AppointmentMapper;
 import kamilceglinski.wit.greathealth.mapper.DoctorMapper;
 import kamilceglinski.wit.greathealth.mapper.DoctorSpecialtyMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +34,8 @@ public class DoctorService {
     private final SpecialtyRepository specialtyRepository;
     private final DoctorSpecialtyRepository doctorSpecialtyRepository;
     private final DoctorSpecialtyMapper doctorSpecialtyMapper;
+    private final AppointmentRepository appointmentRepository;
+    private final AppointmentMapper appointmentMapper;
 
     public DoctorResponseDTO createDoctor(DoctorRequestDTO requestDTO) {
         DoctorEntity doctorEntity = doctorMapper.toDoctorEntity(requestDTO);
@@ -70,5 +77,26 @@ public class DoctorService {
         doctorSpecialtyEntity.setSpecialty(specialtyEntity);
         DoctorSpecialtyEntity savedDoctorSpecialtyEntity = doctorSpecialtyRepository.save(doctorSpecialtyEntity);
         return doctorSpecialtyMapper.toDoctorResponseDTO(savedDoctorSpecialtyEntity);
+    }
+
+    public List<AppointmentResponseDTO> getAppointments(String doctorUuid) {
+        DoctorEntity doctorEntity = doctorRepository.findById(doctorUuid)
+            .orElseThrow();
+        return appointmentRepository.findByDoctor(doctorEntity).stream()
+            .map(appointmentMapper::toAppointmentResponseDTO)
+            .collect(Collectors.toList());
+    }
+
+    public AppointmentResponseDTO finishAppointment(String doctorUuid, String appointmentUuid) {
+        DoctorEntity doctorEntity = doctorRepository.findById(doctorUuid)
+            .orElseThrow();
+        AppointmentEntity appointmentEntity = appointmentRepository.findByDoctorAndUuid(doctorEntity, appointmentUuid)
+            .orElseThrow();
+        if (!StatusEnum.CREATED.equals(appointmentEntity.getStatus())) {
+            throw new RuntimeException("Status of appointment needs to 'CREATED' in order to get it finished");
+        }
+        appointmentEntity.setStatus(StatusEnum.FINISHED);
+        AppointmentEntity savedAppointmentEntity = appointmentRepository.save(appointmentEntity);
+        return appointmentMapper.toAppointmentResponseDTO(savedAppointmentEntity);
     }
 }

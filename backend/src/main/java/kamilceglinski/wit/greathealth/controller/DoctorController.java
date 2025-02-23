@@ -1,6 +1,7 @@
 package kamilceglinski.wit.greathealth.controller;
 
 import java.util.List;
+import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorResponseDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyRequestDTO;
@@ -8,6 +9,7 @@ import kamilceglinski.wit.greathealth.dto.DoctorSpecialtyResponseDTO;
 import kamilceglinski.wit.greathealth.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,5 +56,17 @@ public class DoctorController {
     @ResponseStatus(HttpStatus.OK)
     public List<DoctorResponseDTO> getAllDoctors(@RequestParam(name = "specialtyUuid", required = false) String specialtyUuid) {
         return doctorService.getAllDoctors(specialtyUuid);
+    }
+
+    @GetMapping("/{uuid}/appointments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AppointmentResponseDTO> getAppointments(@PathVariable String uuid) {
+        return doctorService.getAppointments(uuid);
+    }
+
+    @DeleteMapping("/{uuid}/appointments/{appointmentUuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public AppointmentResponseDTO finishAppointment(@PathVariable String uuid, @PathVariable String appointmentUuid) {
+        return doctorService.finishAppointment(uuid, appointmentUuid);
     }
 }
