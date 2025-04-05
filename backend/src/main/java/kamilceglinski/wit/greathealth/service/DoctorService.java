@@ -99,4 +99,12 @@ public class DoctorService {
         AppointmentEntity savedAppointmentEntity = appointmentRepository.save(appointmentEntity);
         return appointmentMapper.toAppointmentResponseDTO(savedAppointmentEntity);
     }
+
+    public void deleteDoctor(String uuid) {
+        doctorRepository.deleteByUuid(uuid);
+    }
+
+    public void deleteDoctorSpecialty(String uuid, String specialtyUuid) {
+        doctorSpecialtyRepository.deleteByDoctor_uuidAndUuid(uuid, specialtyUuid);
+    }
 }

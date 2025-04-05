@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("patients")
+@RequestMapping("api/patients")
 public class PatientController {
 
     private final PatientService patientService;
@@ -35,6 +35,12 @@ public class PatientController {
     @ResponseStatus(HttpStatus.CREATED)
     public PatientResponseDTO updatePatient(@RequestBody PatientRequestDTO requestDTO, @PathVariable String uuid) {
         return patientService.updatePatient(requestDTO, uuid);
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePatient(@PathVariable String uuid) {
+        patientService.deletePatient(uuid);
     }
 
     @GetMapping("/{uuid}")

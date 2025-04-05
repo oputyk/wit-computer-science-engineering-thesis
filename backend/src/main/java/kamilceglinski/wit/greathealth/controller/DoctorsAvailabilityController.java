@@ -6,6 +6,7 @@ import kamilceglinski.wit.greathealth.dto.AvailabilityResponseDTO;
 import kamilceglinski.wit.greathealth.service.DoctorsAvailabilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("doctors/{doctorUuid}/availabilities")
+@RequestMapping("api/doctors/{doctorUuid}/availabilities")
 public class DoctorsAvailabilityController {
 
     private final DoctorsAvailabilityService doctorsAvailabilityService;
@@ -32,6 +33,12 @@ public class DoctorsAvailabilityController {
     @ResponseStatus(HttpStatus.OK)
     public AvailabilityResponseDTO getAvailabilityById(@PathVariable String doctorUuid, @PathVariable String uuid) {
         return doctorsAvailabilityService.getAvailabilityByUuId(doctorUuid, uuid);
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteAvailability(@PathVariable String doctorUuid, @PathVariable String uuid) {
+        doctorsAvailabilityService.deleteAvailability(doctorUuid, uuid);
     }
 
     @GetMapping

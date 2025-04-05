@@ -41,4 +41,8 @@ public class ServiceService {
             .map(serviceMapper::toServiceResponseDTO)
             .collect(Collectors.toList());
     }
+
+    public void deleteService(String uuid) {
+        serviceRepository.deleteByUuid(uuid);
+    }
 }

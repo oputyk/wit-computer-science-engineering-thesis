@@ -6,6 +6,7 @@ import kamilceglinski.wit.greathealth.dto.ServiceResponseDTO;
 import kamilceglinski.wit.greathealth.service.ServiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("services")
+@RequestMapping("api/services")
 public class ServiceController {
 
     private final ServiceService serviceService;
@@ -31,6 +32,12 @@ public class ServiceController {
     @ResponseStatus(HttpStatus.OK)
     public ServiceResponseDTO getServiceById(@PathVariable String uuid) {
         return serviceService.getServiceByUuId(uuid);
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteService(@PathVariable String uuid) {
+        serviceService.deleteService(uuid);
     }
 
     @GetMapping

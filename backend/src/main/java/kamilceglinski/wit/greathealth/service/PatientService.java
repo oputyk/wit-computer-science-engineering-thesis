@@ -66,6 +66,10 @@ public class PatientService {
             .orElseThrow();
     }
 
+    public void deletePatient(String uuid) {
+        patientRepository.deleteByUuid(uuid);
+    }
+
     public AppointmentResponseDTO createAppointment(String patientUuid, AppointmentRequestDTO requestDTO) {
         PatientEntity patientEntity = patientRepository.findById(patientUuid)
             .orElseThrow();

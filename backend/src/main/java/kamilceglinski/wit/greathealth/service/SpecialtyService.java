@@ -33,6 +33,10 @@ public class SpecialtyService {
             .orElseThrow();
     }
 
+    public void deleteSpecialty(String uuid) {
+        specialtyRepository.deleteByUuid(uuid);
+    }
+
     public List<SpecialtyResponseDTO> getAllSpecialties() {
         return specialtyRepository.findAll().stream()
             .map(specialtyMapper::toSpecialtyResponseDTO)

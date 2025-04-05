@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceEntity, String> {
     Optional<ServiceEntity> findBySpecialtyInAndUuid(List<SpecialtyEntity> specialties, String uuid);
+
+    void deleteByUuid(String uuid);
 }

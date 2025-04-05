@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("doctors")
+@RequestMapping("api/doctors")
 public class DoctorController {
 
     private final DoctorService doctorService;
@@ -40,10 +40,22 @@ public class DoctorController {
         return doctorService.createDoctorSpecialty(requestDTO, uuid);
     }
 
+    @DeleteMapping("/{uuid}/specialties/{specialtyUuid}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void deleteDoctorSpecialty(@PathVariable String uuid, @PathVariable String specialtyUuid) {
+        doctorService.deleteDoctorSpecialty(uuid, specialtyUuid);
+    }
+
     @PutMapping("/{uuid}")
     @ResponseStatus(HttpStatus.CREATED)
     public DoctorResponseDTO updateDoctor(@RequestBody DoctorRequestDTO requestDTO, @PathVariable String uuid) {
         return doctorService.updateDoctor(requestDTO, uuid);
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDoctor(@PathVariable String uuid) {
+        doctorService.deleteDoctor(uuid);
     }
 
     @GetMapping("/{uuid}")

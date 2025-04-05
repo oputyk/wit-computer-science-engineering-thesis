@@ -11,4 +11,6 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, String> {
     @Query(value = "select d.* from doctor d join doctor_specialty ds on d.uuid = ds.doctor_uuid and ds.specialty_uuid = ?1",
      nativeQuery = true)
     List<DoctorEntity> findBySpecialty(String specialtyUuid);
+
+    void deleteByUuid(String uuid);
 }
