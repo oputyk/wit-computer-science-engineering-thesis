@@ -2,11 +2,12 @@
 import { RouterOutlet } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
-    imports: [RouterOutlet, NavMenuComponent]
+    imports: [RouterOutlet, NavMenuComponent, MatCardModule]
 })
 export class AppComponent {
   private readonly oidcSecurityService = inject(OidcSecurityService);
