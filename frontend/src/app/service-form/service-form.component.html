@@ -1,1 +1,24 @@
-<p>service-form works!</p>
+<mat-card appearance="outlined">
+    <mat-card-content>   
+        <mat-form-field>
+            <mat-label>Nazwa</mat-label>
+            <input matInput [(ngModel)]="service.name" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Czas trwania usługi w minutach </mat-label>
+            <input type="number" matInput [(ngModel)]="service.timeInMinutes" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Wymagana specjalizacja</mat-label>
+            <mat-select [(ngModel)]="service.specialty" name="specialty">
+                @for (specialty of specialties; track specialty) {
+                  <mat-option [value]="specialty">{{specialty.name}}</mat-option>
+                }
+              </mat-select>
+        </mat-form-field>
+        <div class="lastRow">
+            <button mat-button (click)="cancel()">Anuluj</button>
+            <button mat-button (click)="save()">Zapisz</button>
+        </div>
+    </mat-card-content>
+</mat-card>
