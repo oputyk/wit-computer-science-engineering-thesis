@@ -2,12 +2,13 @@
 
   <section>
     <a mat-button href="/">Great Health</a>
-    <a mat-button href="/doctors">Doktorzy</a>
-    <a mat-button href="/patients">Pacjenci</a>
-    <a mat-button href="/doctor-appointments">Wizyty</a>
-    <a mat-button href="/patient-appointments">Wizyty</a>
-    <a mat-button href="/specialties">Specjalności</a>
-    <a mat-button href="/services">Usługi</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('57057a39-a18f-4aed-bea8-c0f661ff12f0')" href="/doctors">Doktorzy</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('57057a39-a18f-4aed-bea8-c0f661ff12f0')" href="/patients">Pacjenci</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('57057a39-a18f-4aed-bea8-c0f661ff12f0')" href="/specialties">Specjalności</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('57057a39-a18f-4aed-bea8-c0f661ff12f0')" href="/services">Usługi</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('2350f29d-627c-4bd0-b554-e757825ba21c')" href="/doctor-appointments">Wizyty z pacjentami</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('2350f29d-627c-4bd0-b554-e757825ba21c')" href="/availability">Dostępność</a>
+    <a mat-button *ngIf="(userData$ | async)?.userData?.groups?.includes('973529ee-6146-4109-b7ef-21ea5f38efe2')" href="/patient-appointments">Wizyty</a>
   </section>
   <div class="user-info">
     <span>{{ (userData$ | async)?.userData?.name }}</span>

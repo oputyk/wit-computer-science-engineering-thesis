@@ -1,1 +1,24 @@
-<p>patient-form works!</p>
+<mat-card appearance="outlined">
+    <mat-card-content>   
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="patient.email" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Imię</mat-label>
+            <input matInput [(ngModel)]="patient.name" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nazwisko</mat-label>
+            <input matInput [(ngModel)]="patient.surname" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>PESEL</mat-label>
+            <input matInput [(ngModel)]="patient.pesel" />
+        </mat-form-field>
+        <div class="lastRow">
+            <button mat-button (click)="cancel()">Anuluj</button>
+            <button mat-button (click)="save()">Zapisz</button>
+        </div>
+    </mat-card-content>
+</mat-card>

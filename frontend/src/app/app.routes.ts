@@ -8,6 +8,7 @@ import { DoctorAppointmentsComponent } from './doctor-appointments/doctor-appoin
 import { PatientAppointmentsComponent } from './patient-appointments/patient-appointments.component';
 import { SpecialtiesComponent } from './specialties/specialties.component';
 import { ServicesComponent } from './services/services.component';
+import { AvailabilityComponent } from './availability/availability.component';
 
 export const routes: Routes = [
   {
@@ -26,16 +27,6 @@ export const routes: Routes = [
     canActivate: [autoLoginPartialRoutesGuard],
   },
   {
-    path: 'doctor-appointments',
-    component: DoctorAppointmentsComponent,
-    canActivate: [autoLoginPartialRoutesGuard],
-  },
-  {
-    path: 'patient-appointments',
-    component: PatientAppointmentsComponent,
-    canActivate: [autoLoginPartialRoutesGuard],
-  },
-  {
     path: 'specialties',
     component: SpecialtiesComponent,
     canActivate: [autoLoginPartialRoutesGuard],
@@ -43,6 +34,21 @@ export const routes: Routes = [
   {
     path: 'services',
     component: ServicesComponent,
+    canActivate: [autoLoginPartialRoutesGuard],
+  },
+  {
+    path: 'doctor-appointments',
+    component: DoctorAppointmentsComponent,
+    canActivate: [autoLoginPartialRoutesGuard],
+  },
+  {
+    path: 'availability',
+    component: AvailabilityComponent,
+    canActivate: [autoLoginPartialRoutesGuard],
+  },
+  {
+    path: 'patient-appointments',
+    component: PatientAppointmentsComponent,
     canActivate: [autoLoginPartialRoutesGuard],
   },
   { path: 'unauthorized', component: UnauthorizedComponent },
