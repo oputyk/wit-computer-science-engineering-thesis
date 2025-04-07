@@ -105,6 +105,6 @@ public class DoctorService {
     }
 
     public void deleteDoctorSpecialty(String uuid, String specialtyUuid) {
-        doctorSpecialtyRepository.deleteByDoctor_uuidAndUuid(uuid, specialtyUuid);
+        doctorSpecialtyRepository.deleteByDoctor_uuidAndSpecialty_uuid(uuid, specialtyUuid);
     }
 }

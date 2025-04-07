@@ -31,7 +31,7 @@
         
           <ng-container matColumnDef="specialties">
             <th mat-header-cell *matHeaderCellDef> Specjalizacje </th>
-            <td mat-cell *matCellDef="let element"> {{ element.specialties.join(', ') }} </td>
+            <td mat-cell *matCellDef="let element"> {{ getNames(element.specialties) }} </td>
           </ng-container>
 
           <ng-container matColumnDef="action">

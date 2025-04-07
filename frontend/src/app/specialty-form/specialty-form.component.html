@@ -1,1 +1,12 @@
-<p>specialty-form works!</p>
+<mat-card appearance="outlined">
+    <mat-card-content>   
+        <mat-form-field>
+            <mat-label>Nazwa</mat-label>
+            <input matInput [(ngModel)]="specialty.name" />
+        </mat-form-field>
+        <div class="lastRow">
+            <button mat-button (click)="cancel()">Anuluj</button>
+            <button mat-button (click)="save()">Zapisz</button>
+        </div>
+    </mat-card-content>
+</mat-card>

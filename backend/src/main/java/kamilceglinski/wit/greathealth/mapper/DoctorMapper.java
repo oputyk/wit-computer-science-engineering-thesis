@@ -9,11 +9,16 @@ import kamilceglinski.wit.greathealth.data.entity.DoctorSpecialtyEntity;
 import kamilceglinski.wit.greathealth.data.entity.SpecialtyEntity;
 import kamilceglinski.wit.greathealth.dto.DoctorRequestDTO;
 import kamilceglinski.wit.greathealth.dto.DoctorResponseDTO;
+import kamilceglinski.wit.greathealth.dto.SpecialtyResponseDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Transactional
 @Component
 public class DoctorMapper {
+
+    private final SpecialtyMapper specialtyMapper;
 
     public DoctorEntity toDoctorEntity(DoctorRequestDTO requestDTO) {
         DoctorEntity doctorEntity = new DoctorEntity();
@@ -36,11 +41,16 @@ public class DoctorMapper {
         dto.setName(savedDoctorEntity.getName());
         dto.setSurname(savedDoctorEntity.getSurname());
         dto.setPesel(savedDoctorEntity.getPesel());
-        List<String> specialties = savedDoctorEntity.getSpecialties().stream()
-            .map(DoctorSpecialtyEntity::getSpecialty)
-            .map(SpecialtyEntity::getName)
-            .collect(Collectors.toList());
-        dto.setSpecialties(specialties);
+        dto.setSpecialties(savedDoctorEntity.getSpecialties().stream()
+            .map(this::toSpecialtyResponseDTO)
+            .collect(Collectors.toList()));
         return dto;
+    }
+
+    private SpecialtyResponseDTO toSpecialtyResponseDTO(DoctorSpecialtyEntity doctorSpecialtyEntity) {
+        SpecialtyResponseDTO specialtyResponseDTO = new SpecialtyResponseDTO();
+        specialtyResponseDTO.setUuid(doctorSpecialtyEntity.getSpecialty().getUuid());
+        specialtyResponseDTO.setName(doctorSpecialtyEntity.getSpecialty().getName());
+        return specialtyResponseDTO;
     }
 }

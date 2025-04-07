@@ -16,5 +16,5 @@ public class DoctorResponseDTO {
     private String name;
     private String surname;
     private String pesel;
-    private List<String> specialties;
+    private List<SpecialtyResponseDTO> specialties;
 }

@@ -34,7 +34,6 @@ import { MatInputModule } from '@angular/material/input';
 export class PatientFormComponent {
   readonly dialogRef = inject(MatDialogRef<PatientFormComponent>);
   readonly patient = structuredClone(inject<Patient>(MAT_DIALOG_DATA));
-
   cancel(): void {
     this.dialogRef.close();
   }

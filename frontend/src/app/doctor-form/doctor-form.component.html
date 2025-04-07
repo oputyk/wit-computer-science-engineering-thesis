@@ -16,6 +16,14 @@
             <mat-label>PESEL</mat-label>
             <input matInput [(ngModel)]="doctor.pesel" />
         </mat-form-field>
+        <mat-form-field>
+            <mat-label>Specjalizacje</mat-label>
+            <mat-select multiple [(ngModel)]="specialtiesUuids" name="specialty">
+                @for (specialty of specialties; track specialty) {
+                    <mat-option [value]="specialty.uuid">{{specialty.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
         <div class="lastRow">
             <button mat-button (click)="cancel()">Anuluj</button>
             <button mat-button (click)="save()">Zapisz</button>

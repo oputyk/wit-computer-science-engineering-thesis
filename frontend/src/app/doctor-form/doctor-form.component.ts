@@ -10,10 +10,13 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { Doctor } from '../api/models/doctor';
+import { Specialty } from '../api/models/specialty';
+import { SpecialtyApiService } from '../api/services/specialty-api.service';
 
 @Component({
   selector: 'app-doctor-form',
@@ -27,6 +30,7 @@ import { Doctor } from '../api/models/doctor';
     MatDialogActions,
     MatDialogClose,
     MatCardModule,
+    MatSelectModule,
   ],
   templateUrl: './doctor-form.component.html',
   styleUrl: './doctor-form.component.css'
@@ -34,12 +38,23 @@ import { Doctor } from '../api/models/doctor';
 export class DoctorFormComponent {
   readonly dialogRef = inject(MatDialogRef<DoctorFormComponent>);
   readonly doctor = structuredClone(inject<Doctor>(MAT_DIALOG_DATA));
+  specialties: Specialty[];  
+  specialtyApiService = inject(SpecialtyApiService)
+  specialtiesUuids: string[];
+
+  ngOnInit(): void {
+    this.specialtyApiService.getAllSpecialties().subscribe(data => {
+      this.specialties = data;
+    })
+    this.specialtiesUuids = this.doctor.specialties.map(s => s.uuid)
+  }
 
   cancel(): void {
     this.dialogRef.close();
   }
 
   save(): void {
+    this.doctor.specialties = this.specialties.filter(s => this.specialtiesUuids.includes(s.uuid))
     this.dialogRef.close(this.doctor);
   }
 }

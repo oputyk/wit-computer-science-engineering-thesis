@@ -1,0 +1,18 @@
+.header{
+    display: flex;
+    flex-direction: row;
+}
+
+h1 {
+    flex-grow: 1;
+}
+
+button {
+    align-self: center;
+}
+
+.action {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 5em;
+}
