@@ -11,6 +11,7 @@ import { DoctorFormComponent } from '../doctor-form/doctor-form.component';
 import { DoctorRequest } from '../api/models/doctor-request';
 import { Specialty } from '../api/models/specialty';
 import { DoctorSpecialtyRequest } from '../api/models/doctor-specialty-request';
+import { Appointment } from '../api/models/appointment';
 
 @Component({
   selector: 'app-doctors',
@@ -21,8 +22,11 @@ import { DoctorSpecialtyRequest } from '../api/models/doctor-specialty-request';
 export class DoctorsComponent {
   doctorApiService = inject(DoctorApiService)
   displayedColumns: string[] = ['email','name','surname','pesel','specialties', 'action'];
+  displayedColumnsAppointment: string[] = ['date','timeInMinutes','patient', 'patientPESEL','service','status'];
   dataSource: MatTableDataSource<Doctor>;
+  dataSourceAppointments: MatTableDataSource<Appointment>;
   readonly dialog = inject(MatDialog);
+  selectedDoctor: Doctor | null = null;
 
   ngOnInit(): void {
     this.refreshTable();
@@ -87,5 +91,22 @@ export class DoctorsComponent {
 
   getNames(specialties: Specialty[]): string {
     return specialties.map(s => s.name).join(', ')
+  }
+
+  selectDoctor(doctor: Doctor): void {
+    this.selectedDoctor = doctor;
+    this.doctorApiService.getAppointments(doctor.uuid).subscribe(data => {
+      this.dataSourceAppointments = new MatTableDataSource<Appointment>(data);
+    })
+  }
+
+  translateStatus(status: string): string {
+    if (status == 'CREATED')
+      return 'Utworzona'
+    else if (status == 'CANCELED')
+      return 'Anulowana'
+    else if (status == 'FINISHED')
+      return 'Zakończona'
+    return ''
   }
 }

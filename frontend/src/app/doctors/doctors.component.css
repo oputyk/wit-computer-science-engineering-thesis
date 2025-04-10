@@ -10,3 +10,7 @@ h1 {
 button {
     align-self: center;
 }
+
+.selected {
+    font-weight: bold;
+}
