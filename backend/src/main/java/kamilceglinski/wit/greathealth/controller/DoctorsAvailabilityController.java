@@ -34,7 +34,7 @@ public class DoctorsAvailabilityController {
     @ResponseStatus(HttpStatus.CREATED)
     public AvailabilityResponseDTO createAvailability(@PathVariable String doctorUuid,
                                                       @RequestBody DoctorsAvailabilityRequestDTO requestDTO,
-                                                      @AuthenticationPrincipal Authentication authentication) {
+                                                      Authentication authentication) {
         if (!doctorUuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }
@@ -45,7 +45,7 @@ public class DoctorsAvailabilityController {
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public AvailabilityResponseDTO getAvailabilityById(@PathVariable String doctorUuid, @PathVariable String uuid,
-                                                       @AuthenticationPrincipal Authentication authentication) {
+                                                       Authentication authentication) {
         if (!doctorUuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }
@@ -56,7 +56,7 @@ public class DoctorsAvailabilityController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<AvailabilityResponseDTO> getAllAvailabilities(@PathVariable String doctorUuid,
-                                                              @AuthenticationPrincipal Authentication authentication) {
+                                                              Authentication authentication) {
         if (!doctorUuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }

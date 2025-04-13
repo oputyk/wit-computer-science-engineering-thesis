@@ -58,7 +58,7 @@ public class PatientController {
     @GetMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public PatientResponseDTO getPatientById(@PathVariable String uuid,
-                                             @AuthenticationPrincipal Authentication authentication) {
+                                             Authentication authentication) {
         if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }
@@ -76,7 +76,7 @@ public class PatientController {
     @PostMapping("/{uuid}/appointments")
     @ResponseStatus(HttpStatus.CREATED)
     public AppointmentResponseDTO createAppointment(@PathVariable String uuid, @RequestBody AppointmentRequestDTO requestDTO,
-                                                    @AuthenticationPrincipal Authentication authentication) {
+                                                    Authentication authentication) {
         if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }
@@ -87,7 +87,7 @@ public class PatientController {
     @GetMapping("/{uuid}/appointments")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentResponseDTO> getAppointments(@PathVariable String uuid,
-                                                        @AuthenticationPrincipal Authentication authentication) {
+                                                        Authentication authentication) {
         if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }
@@ -98,7 +98,7 @@ public class PatientController {
     @DeleteMapping("/{uuid}/appointments/{appointmentUuid}")
     @ResponseStatus(HttpStatus.OK)
     public AppointmentResponseDTO cancelAppointment(@PathVariable String uuid, @PathVariable String appointmentUuid,
-                                                    @AuthenticationPrincipal Authentication authentication) {
+                                                    Authentication authentication) {
         if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
             throw new AuthorizationServiceException("Not authorized");
         }

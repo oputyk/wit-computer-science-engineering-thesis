@@ -1,6 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptors,
   withInterceptorsFromDi,
@@ -14,6 +15,7 @@ import {
 } from 'angular-auth-oidc-client';
 
 import { routes } from './app.routes';
+import { TokenInterceptorService } from './api/services/token-intercetor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -50,5 +52,10 @@ export const appConfig: ApplicationConfig = {
       withInterceptorsFromDi(),
       withInterceptors([authInterceptor()])
     ),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
   ]
 };

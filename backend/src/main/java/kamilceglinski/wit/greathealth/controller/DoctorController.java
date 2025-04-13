@@ -90,7 +90,7 @@ public class DoctorController {
     @GetMapping("/{uuid}/appointments")
     @ResponseStatus(HttpStatus.OK)
     public List<AppointmentResponseDTO> getAppointments(@PathVariable String uuid,
-                                                        @AuthenticationPrincipal Authentication authentication) {
+                                                        Authentication authentication) {
         if (securityService.isDoctor(authentication)) {
             if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
                 throw new AuthorizationServiceException("Not authorized");
@@ -103,7 +103,7 @@ public class DoctorController {
     @DeleteMapping("/{uuid}/appointments/{appointmentUuid}")
     @ResponseStatus(HttpStatus.OK)
     public AppointmentResponseDTO finishAppointment(@PathVariable String uuid, @PathVariable String appointmentUuid,
-                                                    @AuthenticationPrincipal Authentication authentication) {
+                                                    Authentication authentication) {
         if (securityService.isDoctor(authentication)) {
             if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
                 throw new AuthorizationServiceException("Not authorized");

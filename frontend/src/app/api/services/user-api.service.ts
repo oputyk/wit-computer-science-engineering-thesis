@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { CurrentUserUuid } from '../models/current-user-uuid';
 
 @Injectable({providedIn: 'root'})
-export class ServiceApiService {
+export class UserApiService {
     constructor(private http: HttpClient) { }
 
-    getCurrentUserUuid(): Observable<string> {
-        return this.http.get<string>('api/users/current/uuid');
+    getCurrentUserUuid(): Observable<CurrentUserUuid> {
+        return this.http.get<CurrentUserUuid>('api/users/current/uuid');
     }
 }
