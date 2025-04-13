@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { Appointment } from '../api/models/appointment';
 import { UserApiService } from '../api/services/user-api.service';
+
 @Component({
   selector: 'app-doctor-appointments',
   imports: [MatTableModule, CommonModule, MatCardModule, MatIconModule, MatButtonModule],

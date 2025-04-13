@@ -1,1 +1,28 @@
-<p>availability works!</p>
+<div *ngIf="loggedInDoctorUuid != null">
+<div class="header">
+    <h1>Dostępność</h1>
+    <button mat-icon-button class="example-icon favorite-icon" (click)="create()">
+    <mat-icon>add_circle</mat-icon>
+    </button>
+</div>
+<mat-card appearance="outlined">
+    <mat-card-content>
+    <table mat-table [dataSource]="dataSourceAvailabilities" class="mat-elevation-z8 demo-table">
+        
+        <ng-container matColumnDef="dateTimeFrom">
+        <th mat-header-cell *matHeaderCellDef> Czas od </th>
+        <td mat-cell *matCellDef="let availability"> {{availability.dateTimeFrom}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateTimeTill">
+        <th mat-header-cell *matHeaderCellDef> Czas do </th>
+        <td mat-cell *matCellDef="let availability"> {{availability.dateTimeTill}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsAvailability"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsAvailability;"></tr>
+    </table>
+
+    </mat-card-content>
+</mat-card>
+</div>

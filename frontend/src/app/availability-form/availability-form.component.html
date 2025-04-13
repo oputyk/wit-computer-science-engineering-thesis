@@ -1,1 +1,43 @@
-<p>availability-form works!</p>
+<mat-card appearance="outlined">
+    <mat-card-content>   
+        
+        <mat-form-field>
+            <mat-label>Dzień dostępności od</mat-label>
+            <input matInput [matDatepicker]="datepicker" [(ngModel)]="doctorAvailability.dateTimeFrom">
+            <mat-datepicker #datepicker/>
+            <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Czas dostępności od</mat-label>
+            <input matInput
+                [matTimepicker]="timepicker"
+                [(ngModel)]="doctorAvailability.dateTimeFrom"
+                [ngModelOptions]="{updateOn: 'blur'}">
+            <mat-timepicker #timepicker/>
+            <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Dzień dostępności do</mat-label>
+            <input matInput [matDatepicker]="datepicker1" [(ngModel)]="doctorAvailability.dateTimeTill">
+            <mat-datepicker #datepicker1/>
+            <mat-datepicker-toggle [for]="datepicker1" matSuffix/>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Czas dostępności do</mat-label>
+            <input matInput
+                [matTimepicker]="timepicker1"
+                [(ngModel)]="doctorAvailability.dateTimeTill"
+                [ngModelOptions]="{updateOn: 'blur'}">
+            <mat-timepicker #timepicker1/>
+            <mat-timepicker-toggle [for]="timepicker1" matSuffix/>
+        </mat-form-field>
+
+        <div class="lastRow">
+            <button mat-button (click)="cancel()">Anuluj</button>
+            <button mat-button (click)="save()">Zapisz</button>
+        </div>
+    </mat-card-content>
+</mat-card>
