@@ -11,3 +11,14 @@ spring:
       dialect=: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.xml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.microsoftonline.com/2ab831ab-3873-4eec-903e-159969a8b507/v2.0
+          jwk-set-uri: https://login.windows.net/common/discovery/keys
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

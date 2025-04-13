@@ -16,10 +16,6 @@ export class DoctorAvailabilityApiService {
         return this.http.get<Availability>('api/doctors/' + doctorUuid + '/availabilities/' + availabilityUuid);  
     }
 
-    deleteAvailability(doctorUuid: string, availabilityUuid: string): Observable<void> {
-        return this.http.delete<void>('api/doctors/' + doctorUuid + '/availabilities/' + availabilityUuid);  
-    }
-
     getAllAvailabilities(doctorUuid: string): Observable<Availability[]> {
         return this.http.get<Availability[]>('api/doctors/' + doctorUuid + '/availabilities');  
     }

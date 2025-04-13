@@ -25,6 +25,10 @@ export class PatientApiService {
     getPatientById(patientUuid: string): Observable<Patient> {
         return this.http.get<Patient>('api/patients/' + patientUuid);
     }
+    
+    getCurrentPatient(): Observable<Patient> {
+        return this.http.get<Patient>('api/patients/current')
+    }
 
     getAllPatients(): Observable<Patient[]> {
         return this.http.get<Patient[]>('api/patients');

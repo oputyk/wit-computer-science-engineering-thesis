@@ -1,6 +1,7 @@
 package kamilceglinski.wit.greathealth.controller;
 
 import java.util.List;
+import kamilceglinski.wit.greathealth.config.IsAdmin;
 import kamilceglinski.wit.greathealth.dto.ServiceRequestDTO;
 import kamilceglinski.wit.greathealth.dto.ServiceResponseDTO;
 import kamilceglinski.wit.greathealth.service.ServiceService;
@@ -22,6 +23,7 @@ public class ServiceController {
 
     private final ServiceService serviceService;
 
+    @IsAdmin
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ServiceResponseDTO createService(@RequestBody ServiceRequestDTO requestDTO) {
@@ -34,6 +36,7 @@ public class ServiceController {
         return serviceService.getServiceByUuId(uuid);
     }
 
+    @IsAdmin
     @DeleteMapping("/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteService(@PathVariable String uuid) {

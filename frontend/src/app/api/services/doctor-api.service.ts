@@ -35,6 +35,10 @@ export class DoctorApiService {
         return this.http.get<Doctor>('api/doctors/' + doctorUuid);
     }
 
+    getCurrentDoctor(): Observable<Doctor> {
+        return this.http.get<Doctor>('api/doctors/current')
+    }
+
     getAllDoctors(): Observable<Doctor[]> {
         return this.http.get<Doctor[]>('api/doctors');
     }
