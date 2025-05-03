@@ -2,7 +2,7 @@
     <mat-card-content> 
         <mat-form-field>
             <mat-label>Dzień</mat-label>
-            <input matInput [matDatepicker]="datepicker" [(ngModel)]="date">
+            <input matInput [matDatepicker]="datepicker" [(ngModel)]="date" (dateChange)="updateDate($event.value)">
             <mat-datepicker #datepicker/>
             <mat-datepicker-toggle [for]="datepicker" matSuffix/>
         </mat-form-field>

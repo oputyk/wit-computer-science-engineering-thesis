@@ -87,6 +87,12 @@ export class PatientAppointmentFormComponent {
     });
   }
 
+  updateDate(date: Date): void {
+    this.patientApiService.getAvailableAppointmentTimes(this.loggedInPatientUuid, this.doctor.uuid, this.service.uuid, date).subscribe(availableAppointmentTimes => {
+      this.availableAppointmentTimes = availableAppointmentTimes;
+    });
+  }
+
   cancel(): void {
     this.dialogRef.close();
   }
