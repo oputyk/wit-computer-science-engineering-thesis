@@ -6,6 +6,7 @@ import { Patient } from '../models/patient';
 import { PatientRequest } from '../models/patient-request';
 import { AppointmentRequest } from '../models/appointment-request';
 import { AvailableAppointmentTime } from '../models/available-appointment-time';
+import moment from 'moment';
 
 @Injectable({providedIn: 'root'})
 export class PatientApiService {
@@ -40,6 +41,7 @@ export class PatientApiService {
     }
 
     getAvailableAppointmentTimes(patientUuid: string, doctorUuid: string, serviceUuid: string, date: Date): Observable<AvailableAppointmentTime[]> {
+        date = moment(date).utcOffset(0, true).toDate()
         return this.http.get<AvailableAppointmentTime[]>('api/patients/' + patientUuid + '/available-appointment-times'
             + '?doctorUuid=' + doctorUuid + '&serviceUuid=' + serviceUuid + '&date=' + date.toISOString().split('T')[0]);
     }
