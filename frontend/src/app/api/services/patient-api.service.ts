@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import { Appointment } from '../models/appointment';
 import { Patient } from '../models/patient';
 import { PatientRequest } from '../models/patient-request';
 import { AppointmentRequest } from '../models/appointment-request';
+import { AvailableAppointmentTime } from '../models/available-appointment-time';
 
 @Injectable({providedIn: 'root'})
 export class PatientApiService {
@@ -38,8 +39,13 @@ export class PatientApiService {
         return this.http.post<Appointment>('api/patients/' + patientUuid + '/appointments', appointmentRequest);
     }
 
+    getAvailableAppointmentTimes(patientUuid: string, doctorUuid: string, serviceUuid: string, date: Date): Observable<AvailableAppointmentTime[]> {
+        return this.http.get<AvailableAppointmentTime[]>('api/patients/' + patientUuid + '/available-appointment-times'
+            + '?doctorUuid=' + doctorUuid + '&serviceUuid=' + serviceUuid + '&date=' + date.toISOString().split('T')[0]);
+    }
+
     getAppointments(patientUuid: string): Observable<Appointment[]> {
-        return this.http.get<Appointment[]>('api/patients' + patientUuid + '/appointments');
+        return this.http.get<Appointment[]>('api/patients/' + patientUuid + '/appointments');
     }
 
     cancelAppointment(patientUuid: string, appointmentUuid: string): Observable<void> {

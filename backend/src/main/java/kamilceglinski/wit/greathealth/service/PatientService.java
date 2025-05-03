@@ -1,7 +1,9 @@
 package kamilceglinski.wit.greathealth.service;
 
 import jakarta.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import kamilceglinski.wit.greathealth.data.entity.AppointmentEntity;
@@ -19,10 +21,13 @@ import kamilceglinski.wit.greathealth.data.repository.PatientRepository;
 import kamilceglinski.wit.greathealth.data.repository.ServiceRepository;
 import kamilceglinski.wit.greathealth.dto.AppointmentRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
+import kamilceglinski.wit.greathealth.dto.AvailableAppointmentTimeResponseDTO;
 import kamilceglinski.wit.greathealth.dto.PatientRequestDTO;
 import kamilceglinski.wit.greathealth.dto.PatientResponseDTO;
 import kamilceglinski.wit.greathealth.mapper.AppointmentMapper;
+import kamilceglinski.wit.greathealth.mapper.DoctorMapper;
 import kamilceglinski.wit.greathealth.mapper.PatientMapper;
+import kamilceglinski.wit.greathealth.mapper.ServiceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +39,8 @@ public class PatientService {
 
     private final PatientMapper patientMapper;
     private final PatientRepository patientRepository;
+    private final DoctorMapper doctorMapper;
+    private final ServiceMapper serviceMapper;
     private final AppointmentRepository appointmentRepository;
     private final AppointmentMapper appointmentMapper;
     private final DoctorRepository doctorRepository;
@@ -80,25 +87,9 @@ public class PatientService {
             .toList();
         ServiceEntity serviceEntity = serviceRepository.findBySpecialtyInAndUuid(specialties, requestDTO.getServiceUuid())
             .orElseThrow();
-        LocalDateTime newAppointmentDateTimeFrom = requestDTO.getDateTimeFrom();
-        LocalDateTime newAppointmentDateTimeTill = newAppointmentDateTimeFrom.plusMinutes(serviceEntity.getTimeInMinutes());
-        AvailabilityEntity availabilityEntity = availabilityRepository.findByDoctorUuidAndDateTime(
-                requestDTO.getDoctorUuid(), newAppointmentDateTimeFrom, newAppointmentDateTimeTill)
-            .orElseThrow();
-
-        LocalDateTime availabilityDateTimeFrom = availabilityEntity.getDateTimeFrom();
-        LocalDateTime availabilityDateTimeTill = availabilityEntity.getDateTimeTill();
-
-        List<AppointmentEntity> existingAppointments = appointmentRepository.findByAvailabilityTime(
-            availabilityDateTimeFrom, availabilityDateTimeTill);
-        for (AppointmentEntity existingAppointment : existingAppointments) {
-            LocalDateTime existingAppointmentDateTimeFrom = existingAppointment.getDateTimeFrom();
-            Integer existingAppointmentTimeInMinutes = existingAppointment.getService().getTimeInMinutes();
-            LocalDateTime existingAppointmentDateTimeTill = existingAppointmentDateTimeFrom.plusMinutes(existingAppointmentTimeInMinutes);
-            if (isInCollision(newAppointmentDateTimeFrom, newAppointmentDateTimeTill,
-                existingAppointmentDateTimeFrom, existingAppointmentDateTimeTill)) {
-                throw new RuntimeException("New appointment collides with an existing one");
-            }
+        if (!isDateTimeAvailable(doctorEntity, serviceEntity.getTimeInMinutes(),
+            requestDTO.getDateTimeFrom())) {
+            throw new RuntimeException("That date time is unavailable");
         }
 
         AppointmentEntity appointmentEntity = appointmentMapper.toAppointmentEntity(requestDTO, patientEntity, doctorEntity, serviceEntity);
@@ -122,6 +113,68 @@ public class PatientService {
         appointmentEntity.setStatus(StatusEnum.CANCELED);
         AppointmentEntity savedAppointmentEntity = appointmentRepository.save(appointmentEntity);
         return appointmentMapper.toAppointmentResponseDTO(savedAppointmentEntity);
+    }
+
+    public List<AvailableAppointmentTimeResponseDTO> getAvailableAppointmentTimes(String uuid, String doctorUuid,
+                                                                                  String serviceUuid, LocalDate date) {
+        PatientEntity patientEntity = patientRepository.findById(uuid)
+            .orElseThrow();
+        DoctorEntity doctorEntity = doctorRepository.findById(doctorUuid)
+            .orElseThrow();
+        List<SpecialtyEntity> specialties = doctorEntity.getSpecialties().stream()
+            .map(DoctorSpecialtyEntity::getSpecialty)
+            .toList();
+        ServiceEntity serviceEntity = serviceRepository.findBySpecialtyInAndUuid(specialties, serviceUuid)
+            .orElseThrow();
+        int timeInMinutes = serviceEntity.getTimeInMinutes();
+
+        LocalDateTime minLocalDateTime = date.atStartOfDay();
+        LocalDateTime maxLocalDateTime = date.plusDays(1).atStartOfDay();
+        LocalDateTime currentDateTime = minLocalDateTime;
+        List<LocalDateTime> allDateTimesForGivenDay = new ArrayList<>();
+        while (currentDateTime.plusMinutes(timeInMinutes).isBefore(maxLocalDateTime)) {
+            if (isDateTimeAvailable(doctorEntity, timeInMinutes, currentDateTime)) {
+                allDateTimesForGivenDay.add(currentDateTime);
+            }
+            currentDateTime = currentDateTime.plusMinutes(timeInMinutes);
+        }
+
+        return allDateTimesForGivenDay.stream()
+            .map(localDateTime -> AvailableAppointmentTimeResponseDTO.builder()
+                    .doctor(doctorMapper.toDoctorResponseDTO(doctorEntity))
+                    .service(serviceMapper.toServiceResponseDTO(serviceEntity))
+                    .dateTimeFrom(localDateTime)
+                    .build()
+            )
+            .collect(Collectors.toList());
+    }
+
+    public boolean isDateTimeAvailable(DoctorEntity doctorEntity, int timeInMinutes, LocalDateTime newAppointmentDateTimeFrom) {
+        LocalDateTime newAppointmentDateTimeTill = newAppointmentDateTimeFrom.plusMinutes(timeInMinutes);
+        AvailabilityEntity availabilityEntity = availabilityRepository.findByDoctorUuidAndDateTime(
+                doctorEntity.getUuid(), newAppointmentDateTimeFrom, newAppointmentDateTimeTill)
+            .stream()
+            .findFirst()
+            .orElse(null);
+        if (availabilityEntity == null) {
+            return false;
+        }
+
+        LocalDateTime availabilityDateTimeFrom = availabilityEntity.getDateTimeFrom();
+        LocalDateTime availabilityDateTimeTill = availabilityEntity.getDateTimeTill();
+
+        List<AppointmentEntity> existingAppointments = appointmentRepository.findByAvailabilityTime(
+            availabilityDateTimeFrom, availabilityDateTimeTill);
+        for (AppointmentEntity existingAppointment : existingAppointments) {
+            LocalDateTime existingAppointmentDateTimeFrom = existingAppointment.getDateTimeFrom();
+            Integer existingAppointmentTimeInMinutes = existingAppointment.getService().getTimeInMinutes();
+            LocalDateTime existingAppointmentDateTimeTill = existingAppointmentDateTimeFrom.plusMinutes(existingAppointmentTimeInMinutes);
+            if (isInCollision(newAppointmentDateTimeFrom, newAppointmentDateTimeTill,
+                existingAppointmentDateTimeFrom, existingAppointmentDateTimeTill)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     static boolean isInCollision(LocalDateTime newAppointmentDateTimeFrom, LocalDateTime newAppointmentDateTimeTill,

@@ -16,10 +16,10 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity, 
 
     Optional<AppointmentEntity> findByPatientAndUuid(PatientEntity patient, String uuid);
 
-    List<AppointmentEntity> findByDoctor(DoctorEntity patient);
+    List<AppointmentEntity> findByDoctor(DoctorEntity doctor);
 
     Optional<AppointmentEntity> findByDoctorAndUuid(DoctorEntity patient, String uuid);
 
-    @Query("select a from AppointmentEntity a where a.dateTimeFrom >= :availabilityDateTimeFrom and a.dateTimeFrom <= :availabilityDateTimeTill and a.status = kamilceglinski.wit.greathealth.data.entity.StatusEnum.CREATED")
+    @Query("select a from AppointmentEntity a where a.dateTimeFrom >= :availabilityDateTimeFrom and a.dateTimeFrom <= :availabilityDateTimeTill and (a.status = kamilceglinski.wit.greathealth.data.entity.StatusEnum.CREATED or a.status = kamilceglinski.wit.greathealth.data.entity.StatusEnum.FINISHED)")
     List<AppointmentEntity> findByAvailabilityTime(LocalDateTime availabilityDateTimeFrom, LocalDateTime availabilityDateTimeTill);
 }

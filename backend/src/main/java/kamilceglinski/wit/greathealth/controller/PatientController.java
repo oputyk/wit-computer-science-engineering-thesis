@@ -1,11 +1,13 @@
 package kamilceglinski.wit.greathealth.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import kamilceglinski.wit.greathealth.config.IsAdmin;
 import kamilceglinski.wit.greathealth.config.IsAdminOrPatient;
 import kamilceglinski.wit.greathealth.config.IsPatient;
 import kamilceglinski.wit.greathealth.dto.AppointmentRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
+import kamilceglinski.wit.greathealth.dto.AvailableAppointmentTimeResponseDTO;
 import kamilceglinski.wit.greathealth.dto.PatientRequestDTO;
 import kamilceglinski.wit.greathealth.dto.PatientResponseDTO;
 import kamilceglinski.wit.greathealth.service.PatientService;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -81,6 +84,20 @@ public class PatientController {
             throw new AuthorizationServiceException("Not authorized");
         }
         return patientService.createAppointment(uuid, requestDTO);
+    }
+
+    @IsPatient
+    @GetMapping("/{uuid}/available-appointment-times")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AvailableAppointmentTimeResponseDTO> getAvailableAppointmentTimes(@PathVariable String uuid,
+                                                                                  @RequestParam String doctorUuid,
+                                                                                  @RequestParam String serviceUuid,
+                                                                                  @RequestParam LocalDate date,
+                                                                                  Authentication authentication) {
+        if (!uuid.equals(userService.getCurrentUserUuid(authentication))) {
+            throw new AuthorizationServiceException("Not authorized");
+        }
+        return patientService.getAvailableAppointmentTimes(uuid, doctorUuid, serviceUuid, date);
     }
 
     @IsPatient

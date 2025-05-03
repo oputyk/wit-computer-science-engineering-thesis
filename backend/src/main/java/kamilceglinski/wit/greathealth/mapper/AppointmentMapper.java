@@ -7,6 +7,7 @@ import kamilceglinski.wit.greathealth.data.entity.ServiceEntity;
 import kamilceglinski.wit.greathealth.data.entity.StatusEnum;
 import kamilceglinski.wit.greathealth.dto.AppointmentRequestDTO;
 import kamilceglinski.wit.greathealth.dto.AppointmentResponseDTO;
+import kamilceglinski.wit.greathealth.dto.AvailableAppointmentTimeResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

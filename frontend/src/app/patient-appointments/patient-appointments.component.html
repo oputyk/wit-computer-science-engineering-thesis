@@ -1,1 +1,52 @@
-<p>patient-appointments works!</p>
+<div *ngIf="loggedInPatientUuid != null">
+    <div class="header">
+      <h1>Wizyty</h1>
+      <button mat-icon-button class="example-icon favorite-icon" (click)="create()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <table mat-table [dataSource]="dataSourceAppointments" class="mat-elevation-z8 demo-table">
+          
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Data </th>
+            <td mat-cell *matCellDef="let appointment"> {{appointment.dateTimeFrom}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="timeInMinutes">
+            <th mat-header-cell *matHeaderCellDef> Czas wizyty </th>
+            <td mat-cell *matCellDef="let appointment"> {{appointment.service.timeInMinutes}} minut </td>
+          </ng-container>
+          
+            <ng-container matColumnDef="doctor">
+              <th mat-header-cell *matHeaderCellDef> Doctor </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.doctor.name}} {{appointment.doctor.surname}}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="service">
+              <th mat-header-cell *matHeaderCellDef> Usługa </th>
+              <td mat-cell *matCellDef="let appointment"> {{appointment.service.name}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let appointment"> {{translateStatus(appointment.status)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>  </th>
+              <td mat-cell *matCellDef="let element" class="action-link">
+                <button *ngIf="element.status == 'CREATED'" (click)="cancelAppointment(element)" mat-icon-button class="example-icon favorite-icon">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAppointment"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsAppointment;"></tr>
+        </table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>

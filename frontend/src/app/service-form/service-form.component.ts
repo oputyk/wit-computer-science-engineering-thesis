@@ -38,7 +38,7 @@ import { SpecialtyApiService } from '../api/services/specialty-api.service';
   styleUrl: './service-form.component.css'
 })
 export class ServiceFormComponent {
-  specialties: Specialty[];  
+  specialties: Specialty[];
   specialtyApiService = inject(SpecialtyApiService)
   readonly dialogRef = inject(MatDialogRef<ServiceFormComponent>);
   readonly service = structuredClone(inject<Service>(MAT_DIALOG_DATA));

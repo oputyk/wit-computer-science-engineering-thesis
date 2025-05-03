@@ -39,6 +39,10 @@ export class DoctorApiService {
         return this.http.get<Doctor[]>('api/doctors');
     }
 
+    getDoctorsBySpecialty(specialtyUuid: string): Observable<Doctor[]> {
+        return this.http.get<Doctor[]>('api/doctors?specialtyUuid=' + specialtyUuid);
+    }
+
     getAppointments(doctorUuid: string): Observable<Appointment[]> {
         return this.http.get<Appointment[]>('api/doctors/' + doctorUuid + '/appointments');
     }

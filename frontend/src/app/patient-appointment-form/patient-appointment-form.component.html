@@ -1,0 +1,42 @@
+<mat-card appearance="outlined">
+    <mat-card-content> 
+        <mat-form-field>
+            <mat-label>Dzień</mat-label>
+            <input matInput [matDatepicker]="datepicker" [(ngModel)]="date">
+            <mat-datepicker #datepicker/>
+            <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Usługa</mat-label>
+            <mat-select [(ngModel)]="service" name="service" (selectionChange)="updateDoctors($event.value)">
+                @for (service of services; track service) {
+                  <mat-option [value]="service">{{service.name}}</mat-option>
+                }
+              </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="date != null && service != null">
+            <mat-label>Doktor</mat-label>
+            <mat-select [(ngModel)]="doctor" name="doctor" (selectionChange)="updateAvailableAppointmentTimes($event.value)">
+                @for (doctor of doctors; track doctor) {
+                  <mat-option [value]="doctor">{{doctor.name}} {{doctor.surname}}</mat-option>
+                }
+              </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="date != null && service != null && doctor != null">
+            <mat-label>Czas wizyty</mat-label>
+            <mat-select [(ngModel)]="availableAppointmentTime" name="availableAppointmentTime">
+                @for (availableAppointmentTime of availableAppointmentTimes; track availableAppointmentTime) {
+                  <mat-option [value]="availableAppointmentTime.dateTimeFrom">{{availableAppointmentTime.dateTimeFrom}}</mat-option>
+                }
+              </mat-select>
+        </mat-form-field>
+        
+        <div class="lastRow">
+            <button mat-button (click)="cancel()">Anuluj</button>
+            <button mat-button (click)="save()">Zapisz</button>
+        </div>
+    </mat-card-content>
+</mat-card>
