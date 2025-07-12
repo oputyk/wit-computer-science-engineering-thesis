@@ -36,10 +36,6 @@ public class DoctorsAvailabilityService {
             .orElseThrow();
     }
 
-    public void deleteAvailability(String doctorUuid, String uuid) {
-        availabilityRepository.deleteByDoctor_uuidAndUuid(doctorUuid, uuid);
-    }
-
     public List<AvailabilityResponseDTO> getAllAvailabilities(String doctorUuid) {
         return availabilityRepository.findAllByDoctor_uuid(doctorUuid).stream()
             .map(availabilityMapper::toAvailabilityResponseDTO)
