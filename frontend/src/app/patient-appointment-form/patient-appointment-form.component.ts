@@ -73,30 +73,25 @@ export class PatientAppointmentFormComponent {
       })
     });
   }
-
   updateDoctors(service: Service): void {
     this.doctorApiService.getDoctorsBySpecialty(service.specialty.uuid).subscribe(doctors => {
       this.doctors = doctors;
       this.availableAppointmentTimes = null;
     });
   }
-
   updateAvailableAppointmentTimes(doctor: Doctor): void {
     this.patientApiService.getAvailableAppointmentTimes(this.loggedInPatientUuid, doctor.uuid, this.service.uuid, this.date).subscribe(availableAppointmentTimes => {
       this.availableAppointmentTimes = availableAppointmentTimes;
     });
   }
-
   updateDate(date: Date): void {
     this.patientApiService.getAvailableAppointmentTimes(this.loggedInPatientUuid, this.doctor.uuid, this.service.uuid, date).subscribe(availableAppointmentTimes => {
       this.availableAppointmentTimes = availableAppointmentTimes;
     });
   }
-
   cancel(): void {
     this.dialogRef.close();
   }
-
   save(): void {
     this.dialogRef.close({
       doctorUuid: this.doctor.uuid,

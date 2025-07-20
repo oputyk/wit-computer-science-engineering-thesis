@@ -31,7 +31,6 @@ export class PatientAppointmentsComponent {
       this.refreshTable();
     })
   }
-
   cancelAppointment(appointment: Appointment) {
     if (appointment.status == 'CREATED') {
       this.patientApiService.cancelAppointment(this.loggedInPatientUuid, appointment.uuid).subscribe(a => {
@@ -39,7 +38,6 @@ export class PatientAppointmentsComponent {
       })
     }
   }
-
   create(): void {
     const dialogRef = this.dialog.open(PatientAppointmentFormComponent, {
       data: {},
@@ -55,13 +53,11 @@ export class PatientAppointmentsComponent {
       }
     });
   }
-
   refreshTable(): void {
     this.patientApiService.getAppointments(this.loggedInPatientUuid).subscribe(data => {
       this.dataSourceAppointments = new MatTableDataSource<Appointment>(data);
     })
   }
-
   translateStatus(status: string): string {
     if (status == 'CREATED')
       return 'Utworzona'
