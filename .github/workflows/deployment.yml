@@ -19,3 +19,8 @@ jobs:
     - run: |
         docker build . -t witkamil.azurecr.io/greathealth:${{ github.run_number }}
         docker push witkamil.azurecr.io/greathealth:${{ github.run_number }}
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'greathealth'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        images: 'witkamil.azurecr.io/greathealth:${{ github.run_number }}'
