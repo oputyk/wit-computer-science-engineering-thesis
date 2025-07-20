@@ -13,9 +13,9 @@ jobs:
     - uses: actions/checkout@v2
     - uses: azure/docker-login@v1
       with:
-        login-server: mycontainer.azurecr.io
+        login-server: witkamil.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build . -t mycontainer.azurecr.io/greathealth:${{ github.run_number }}
-        docker push mycontainer.azurecr.io/greathealth:${{ github.run_number }}
+        docker build . -t witkamil.azurecr.io/greathealth:${{ github.run_number }}
+        docker push witkamil.azurecr.io/greathealth:${{ github.run_number }}
