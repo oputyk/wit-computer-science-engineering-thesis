@@ -21,6 +21,8 @@ COPY --from=frontendbuild /usr/src/app/dist/greathealth/browser/ /opt/app/src/ma
 
 ENV WEB_PORT 80
 
+RUN chmod +x gradlew
+
 RUN ./gradlew bootJar
 
 ENTRYPOINT ["java","-jar","./build/libs/greathealth-0.0.1-SNAPSHOT.jar"]
